@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  spring-event:
+    build: ./
+    image: spring-event:1.0.0
+    ports:
+      - "8081:8081"
+    environment:
+      - INSTANCE_NAME=instance_1
+      - DATABASE_SERVER=host.docker.internal
+      - DATABASE_PORT=5432
+      - DATABASE_DB=spring-event
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=123

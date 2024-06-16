@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN notation VARCHAR(255), ADD COLUMN status CHAR(1);
