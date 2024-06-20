@@ -5,6 +5,7 @@ import com.winnie.ecserviceorder.service.EventBus;
 import com.winnie.ecserviceorder.usecase.*;
 import com.winnie.ecserviceorder.util.OrderMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -19,7 +20,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
+@Slf4j
 public class OrderController {
+
+    public static final String X_JWT_FIRST_NAME_HEADER = "X-jwt-first-name";
+    public static final String X_JWT_LAST_NAME_HEADER = "X-jwt-last-name";
+    private static final String X_JWT_USER_HEADER = "X-jwt-user";
 
     @Autowired
     private JobLauncher jobLauncher;
@@ -34,6 +40,7 @@ public class OrderController {
 
     @Autowired
     private EventBus eventBus;
+
     @Autowired
     private CreateOrderUseCase createOrderUseCase;
 
@@ -134,7 +141,6 @@ public class OrderController {
         return ResponseEntity.ok(OrderMapper.toDto(createOrderWithInnerSavePointUseCase.create(orderDto, user, errorCode)));
     }
 
-
     @Operation(summary = "Remove temp Order")
     @GetMapping("/remove-temp")
     public ResponseEntity<Object> removeTempOrder() {
@@ -144,17 +150,17 @@ public class OrderController {
 
     @Operation(summary = "Run batch manually")
     @PostMapping("/batch")
-    public ResponseEntity<Boolean> batchJob(@RequestHeader String jobType) throws Exception {
+    public ResponseEntity<Void> batchJob(
+            @RequestHeader String jobType,
+            @RequestHeader(value = X_JWT_USER_HEADER, required = false) String username,
+            @RequestHeader(value = X_JWT_FIRST_NAME_HEADER, required = false) String firstname,
+            @RequestHeader(value = X_JWT_LAST_NAME_HEADER, required = false) String lastname) throws Exception {
         JobParameters jobParameters = new JobParametersBuilder().addString("randomId", UUID.randomUUID().toString()).toJobParameters();
-        JobExecution execution = null;
-        if ("flowStepJob".equals(jobType)) {
-            execution = jobLauncher.run(flowStepJob, jobParameters);
-        } else {
-            execution = jobLauncher.run(taskLetJob, jobParameters);
-        }
-        System.out.println("STATUS :: " + execution.getStatus());
+        Job job = "flowStepJob".equals(jobType) ? flowStepJob : taskLetJob;
+        JobExecution execution = jobLauncher.run(job, jobParameters);
+        log.info("BATCH CONTROLLER STATUS :: " + execution.getStatus());
 
-        return ResponseEntity.ok(Boolean.TRUE);
+        return ResponseEntity.ok().build();
     }
 
 }
