@@ -7,10 +7,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class Application {
+public class EcServiceOrderApplication {
 
   public static void main(String[] args) {
-    ApplicationContext context = SpringApplication.run(Application.class, args);
+    ApplicationContext context = SpringApplication.run(EcServiceOrderApplication.class, args);
   }
 
 }

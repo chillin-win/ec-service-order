@@ -56,6 +56,7 @@ public class BatchConfiguration {
         .build();
   }
 
+
   @Bean
   public ItemProcessor<Order, Order> processor() {
     return new ItemProcessor<Order, Order>() {
