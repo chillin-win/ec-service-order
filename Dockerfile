@@ -1,14 +1,11 @@
-FROM maven:3.6.3-openjdk-11 as builder
+FROM maven:3.8.5-openjdk-17 as builder
 # Build dependency project
-WORKDIR /core/source
-COPY ./core .
-RUN mvn clean install
 
 # Build main project
-WORKDIR /spring-event/source
-COPY ./spring-event .
+WORKDIR /ec-service-order/source
+COPY ./ .
 RUN mvn clean install
 
-FROM openjdk:11.0.12-jdk as runtime
-COPY --from=builder /spring-event/source/target/*.jar /spring-event/app.jar
-CMD ["java", "-jar", "/spring-event/app.jar"]
+FROM openjdk:17 as runtime
+COPY --from=builder /ec-service-order/source/target/*.jar /ec-service-order/app.jar
+CMD ["java", "-jar", "/ec-service-order/app.jar"]

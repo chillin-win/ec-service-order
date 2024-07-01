@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -54,6 +55,9 @@ public class OrderController {
     private CreateOrderWithNonAnnotatedCallingAnnotatedUseCase createOrderWithNonAnnotatedCallingAnnotateduseCase;
 
     @Autowired
+    private FindOrdersUseCase findOrdersUseCase;
+
+    @Autowired
     private FindOrderByNameUseCase findOrderByNameUseCase;
 
     @Autowired
@@ -67,6 +71,12 @@ public class OrderController {
 
     @Autowired
     private CreateWithRequiredCallingRequiresNewAndThrowingAfterT2UseCase createWithRequiredCallingRequiresNewAndThrowingAfterT2UseCase;
+
+    @Operation(summary = "Find all")
+    @GetMapping("")
+    public ResponseEntity<List<OrderDto>> findAll() {
+        return ResponseEntity.ok(OrderMapper.toDtos(findOrdersUseCase.findAll()));
+    }
 
     @Operation(summary = "Create order with 10 seconds delay for persisting data by Transactional Event Listener")
     @PostMapping("/by-transactional-event-listener")

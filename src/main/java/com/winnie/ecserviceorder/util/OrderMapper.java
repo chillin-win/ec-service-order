@@ -4,6 +4,8 @@ import com.winnie.ecserviceorder.controller.dto.OrderDto;
 import com.winnie.ecserviceorder.entity.Order;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,5 +25,12 @@ public class OrderMapper {
         if (!Objects.isNull(model)) BeanUtils.copyProperties(model, dto);
 
         return dto;
+    }
+
+    public static List<OrderDto> toDtos(List<Order> models) {
+        List<OrderDto> dtos = new ArrayList<>();
+        models.forEach(order -> dtos.add(toDto(order)));
+
+        return dtos;
     }
 }

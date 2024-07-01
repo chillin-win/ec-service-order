@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -34,6 +35,10 @@ public class OrderService {
     tempOrder.setName("Temp Order " + tempObjectCounter);
 
     return tempOrder;
+  }
+
+  public List<Order> findAll() {
+    return orderRepository.findAll();
   }
 
   public Order create(Order order) {
