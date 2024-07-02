@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  spring-event:
+  ec-service-order:
     build: ./
     image: ec-service-order:latest
     ports:

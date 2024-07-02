@@ -77,7 +77,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-event</finalName>
+        <finalName>ec-service-order</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
