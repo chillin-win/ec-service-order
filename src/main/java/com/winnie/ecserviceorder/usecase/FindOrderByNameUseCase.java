@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class FindOrderByNameUseCase {
 
-  @Autowired
-  private OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
-  public Order find(String orderName) {
-    return orderService.findByName(orderName);
-  }
+    public Order find(String orderName) {
+        return orderService.findByName(orderName);
+    }
 
-  public Order findById(String orderId) {
-    return orderService.findById(orderId);
-  }
+    public Order findById(Integer orderId) {
+        return orderService.findById(orderId);
+    }
 }

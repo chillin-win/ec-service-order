@@ -55,7 +55,7 @@ public class OrderService {
   }
 
   @Transactional
-  public Order updateOrderWithCreationQuery(String orderId, Order updateModel, Integer errorCode) {
+  public Order updateOrderWithCreationQuery(Integer orderId, Order updateModel, Integer errorCode) {
     Order existingOrder = orderRepository.findById(orderId).get();
     existingOrder.setName(updateModel.getName());
 
@@ -68,7 +68,7 @@ public class OrderService {
   }
 
   @Transactional
-  public Order updateOrderWithNativeQuery(String orderId, Order updateModel, Integer errorCode) throws InterruptedException {
+  public Order updateOrderWithNativeQuery(Integer orderId, Order updateModel, Integer errorCode) throws InterruptedException {
     Order existingOrder = orderRepository.findById(orderId).get();
     existingOrder.setName(updateModel.getName());
 
@@ -161,7 +161,7 @@ public class OrderService {
   }
 
   @Transactional
-  public Order findById(String orderId) {
+  public Order findById(Integer orderId) {
     return orderRepository.findById(orderId).orElse(null);
   }
 

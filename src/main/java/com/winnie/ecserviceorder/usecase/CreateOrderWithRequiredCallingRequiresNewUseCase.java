@@ -7,18 +7,15 @@ import com.winnie.ecserviceorder.util.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class CreateOrderWithRequiredCallingRequiresNewUseCase {
 
-  @Autowired
-  private OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
-  public Order create(OrderDto orderDto, String user, Integer errorCode) {
-    Order model = OrderMapper.toModel(orderDto);
-    model.setId(UUID.randomUUID().toString());
-    model.setCreatedBy(user);
-    return orderService.createWithRequiredCallingRequiresNew(model, errorCode);
-  }
+    public Order create(OrderDto orderDto, String user, Integer errorCode) {
+        Order model = OrderMapper.toModel(orderDto);
+        model.setCreatedBy(user);
+        return orderService.createWithRequiredCallingRequiresNew(model, errorCode);
+    }
 }

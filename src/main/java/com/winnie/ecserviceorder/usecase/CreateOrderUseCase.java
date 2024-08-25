@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 /**
  * Create order use case.
  */
@@ -21,23 +19,24 @@ import java.util.UUID;
 @Slf4j
 public class CreateOrderUseCase {
 
-  @Autowired
-  private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
-  @Autowired
-  private OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
-  @Async
-  @Transactional(isolation = Isolation.SERIALIZABLE)
-  public void createLater(OrderDto orderDto, String user) {
-    log.info("Start creating");
-    Order model = OrderMapper.toModel(orderDto);
-    model.setId(UUID.randomUUID().toString());
-    model.setCreatedBy(user);
-    eventPublisher.publishEvent(model);
-    orderService.create(model);
-  }
-  public void removeTempOrder() {
-    orderService.removeTempOrder();
-  }
+    @Async
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void createLater(OrderDto orderDto, String user) {
+        log.info("Start creating");
+        Order model = OrderMapper.toModel(orderDto);
+
+        model.setCreatedBy(user);
+        eventPublisher.publishEvent(model);
+        orderService.create(model);
+    }
+
+    public void removeTempOrder() {
+        orderService.removeTempOrder();
+    }
 }

@@ -93,7 +93,7 @@ public class OrderController {
 
     @Operation(summary = "Find By Id")
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDto> findById(@PathVariable String orderId) {
+    public ResponseEntity<OrderDto> findById(@PathVariable Integer orderId) {
         return ResponseEntity.ok(OrderMapper.toDto(findOrderByNameUseCase.findById(orderId)));
     }
 
@@ -105,13 +105,13 @@ public class OrderController {
 
     @Operation(summary = "Update order with annotated method")
     @PatchMapping("/annotatedMethod/creationQuery/{orderId}")
-    public ResponseEntity<OrderDto> updateOrderWithCreationQuery(@RequestHeader String user, @RequestHeader Integer errorCode, @PathVariable String orderId, @RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderDto> updateOrderWithCreationQuery(@RequestHeader String user, @RequestHeader Integer errorCode, @PathVariable Integer orderId, @RequestBody OrderDto orderDto) {
         return ResponseEntity.ok(OrderMapper.toDto(updateOrderUseCase.updateOrderWithCreationQuery(orderId, orderDto, user, errorCode)));
     }
 
     @Operation(summary = "Update order with annotated method")
     @PatchMapping("/annotatedMethod/nativeQuery/{orderId}")
-    public ResponseEntity<OrderDto> updateOrderWithNativeQuery(@RequestHeader String user, @RequestHeader Integer errorCode, @PathVariable String orderId, @RequestBody OrderDto orderDto) throws InterruptedException {
+    public ResponseEntity<OrderDto> updateOrderWithNativeQuery(@RequestHeader String user, @RequestHeader Integer errorCode, @PathVariable Integer orderId, @RequestBody OrderDto orderDto) throws InterruptedException {
         return ResponseEntity.ok(OrderMapper.toDto(updateOrderUseCase.updateOrderWithNativeQuery(orderId, orderDto, user, errorCode)));
     }
 

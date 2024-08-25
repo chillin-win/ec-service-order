@@ -1,44 +1,38 @@
 package com.winnie.ecserviceorder.entity;
 
 import lombok.Data;
-import org.springframework.data.domain.Persistable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
 @Data
-public class Order implements Persistable<String> {
+public class Order {
 
-  @Id
-  private String id;
+    @Id
+    @Column(name = "order_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
 
-  @Column
-  private String name;
-  @Column
-  private LocalDateTime createdAt;
-  @Column
-  private String createdBy;
-  @Column
-  private LocalDateTime updatedAt;
-  @Column
-  private String updatedBy;
-  @Column
-  private String notation;
-  @Column
-  private String status;
+    @Column
+    private String name;
+    @Column
+    private LocalDateTime createdAt;
+    @Column
+    private String createdBy;
+    @Column
+    private LocalDateTime updatedAt;
+    @Column
+    private String updatedBy;
+    @Column
+    private String notation;
+    @Column
+    private String status;
 
-  @Transient
-  private boolean isUpdated;
-
-  @Override
-  protected Object clone() throws CloneNotSupportedException {
-    return super.clone();
-  }
-
-  @Override
-  public boolean isNew() {
-    return !isUpdated;
-  }
 }

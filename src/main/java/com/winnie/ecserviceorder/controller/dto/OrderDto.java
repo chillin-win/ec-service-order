@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Data
 public class OrderDto {
 
-  private String id;
   private String name;
   private LocalDateTime createdAt;
   private String createdBy;

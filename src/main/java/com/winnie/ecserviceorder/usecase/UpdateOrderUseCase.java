@@ -16,12 +16,12 @@ public class UpdateOrderUseCase {
     @Autowired
     private OrderService orderService;
 
-    public Order updateOrderWithCreationQuery(String orderId, OrderDto orderDto, String user, Integer errorCode) {
+    public Order updateOrderWithCreationQuery(Integer orderId, OrderDto orderDto, String user, Integer errorCode) {
         Order updateModel = OrderMapper.toModel(orderDto);
         return orderService.updateOrderWithCreationQuery(orderId, updateModel, errorCode);
     }
 
-    public Order updateOrderWithNativeQuery(String orderId, OrderDto orderDto, String user, Integer errorCode) throws InterruptedException {
+    public Order updateOrderWithNativeQuery(Integer orderId, OrderDto orderDto, String user, Integer errorCode) throws InterruptedException {
         Order updateModel = OrderMapper.toModel(orderDto);
         orderService.updateOrderWithNativeQuery(orderId, updateModel, errorCode);
         Order after = orderService.findById(orderId);

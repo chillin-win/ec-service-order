@@ -7,19 +7,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
-public interface OrderRepository extends JpaRepository<Order, String> {
+public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-  Order findByName(String name);
+    Order findByName(String name);
 
-  @Query(value = "SELECT * FROM orders WHERE id = ?1", nativeQuery = true)
-  Order findByIdNative(String id);
+    @Query(value = "SELECT * FROM orders WHERE id = ?1", nativeQuery = true)
+    Order findByIdNative(Integer id);
 
-  @Transactional
-  @Modifying
-  @Query(value = "DELETE FROM orders WHERE name LIKE '%Temp%'", nativeQuery = true)
-  void removeTempOrder();
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM orders WHERE name LIKE '%Temp%'", nativeQuery = true)
+    void removeTempOrder();
 
-  @Query(value = "SELECT * FROM orders WHERE name = ?1 ", nativeQuery = true)
-  Order findByNameWildCard(String name);
+    @Query(value = "SELECT * FROM orders WHERE LIKE CONCAT('%', ?1, '%') ", nativeQuery = true)
+    Order findByNameWildCard(String name);
+
 }

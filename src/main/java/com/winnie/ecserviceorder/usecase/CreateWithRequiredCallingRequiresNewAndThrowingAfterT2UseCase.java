@@ -7,8 +7,6 @@ import com.winnie.ecserviceorder.util.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class CreateWithRequiredCallingRequiresNewAndThrowingAfterT2UseCase {
 
@@ -17,7 +15,6 @@ public class CreateWithRequiredCallingRequiresNewAndThrowingAfterT2UseCase {
 
     public Order create(OrderDto orderDto, String user, Integer errorCode, Integer errorCode2) {
         Order model = OrderMapper.toModel(orderDto);
-        model.setId(UUID.randomUUID().toString());
         model.setCreatedBy(user);
         return orderService.createWithRequiredCallingRequiresNewAndThrowingAfterT2(model, errorCode, errorCode2);
     }

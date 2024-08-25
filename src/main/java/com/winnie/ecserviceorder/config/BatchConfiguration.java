@@ -47,9 +47,9 @@ public class BatchConfiguration {
   public ItemReader<Order> reader() {
     return new FlatFileItemReaderBuilder<Order>()
         .name("orderItemReader")
-        .resource(new ClassPathResource("Order.csv"))
+        .resource(new ClassPathResource("order.csv"))
         .delimited()
-        .names(new String[]{"id", "name", "createdBy"})
+        .names(new String[]{"name", "createdBy"})
         .fieldSetMapper(new BeanWrapperFieldSetMapper<Order>() {{
           setTargetType(Order.class);
         }})
